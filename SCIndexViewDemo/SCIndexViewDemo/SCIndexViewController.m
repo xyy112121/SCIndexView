@@ -42,6 +42,8 @@
             }
             [indexViewDataSource addObject:item.title];
         }
+        [indexViewDataSource addObject:@"当前"];
+        [indexViewDataSource addObject:@"热门"];
         dispatch_sync(dispatch_get_main_queue(), ^{
             self.tableViewDataSource = tableViewDataSource.copy;
             

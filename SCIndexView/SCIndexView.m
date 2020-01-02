@@ -135,7 +135,11 @@ static inline NSInteger SCPositionOfTextLayerInY(CGFloat y, CGFloat margin, CGFl
         NSUInteger section = i + deta;
         textLayer.frame = CGRectMake(self.bounds.size.width - self.configuration.indexItemRightMargin - self.configuration.indexItemHeight, SCGetTextLayerCenterY(section, margin, space) - self.configuration.indexItemHeight / 2, self.configuration.indexItemHeight, self.configuration.indexItemHeight);
         textLayer.string = self.dataSource[section];
-        textLayer.fontSize = self.configuration.indexItemHeight * 0.8;
+        if(self.dataSource[section].length > 1){
+            textLayer.fontSize = self.configuration.indexItemHeight * 0.5;
+        }else{
+            textLayer.fontSize = self.configuration.indexItemHeight * 0.8;
+        }
         textLayer.cornerRadius = self.configuration.indexItemHeight / 2;
         textLayer.alignmentMode = kCAAlignmentCenter;
         textLayer.contentsScale = UIScreen.mainScreen.scale;
@@ -295,6 +299,9 @@ static inline NSInteger SCPositionOfTextLayerInY(CGFloat y, CGFloat margin, CGFl
         self.indicator.center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
     }
     self.indicator.text = textLayer.string;
+    if(self.indicator.text.length > 1){
+        self.indicator.font = [UIFont systemFontOfSize:14.0];
+    }
     
     if (animated) {
         self.indicator.alpha = 0;
@@ -481,7 +488,8 @@ static inline NSInteger SCPositionOfTextLayerInY(CGFloat y, CGFloat margin, CGFl
         _indicator = [UILabel new];
         _indicator.layer.backgroundColor = self.configuration.indicatorBackgroundColor.CGColor;
         _indicator.textColor = self.configuration.indicatorTextColor;
-        _indicator.font = self.configuration.indicatorTextFont;
+        _indicator.font = [UIFont systemFontOfSize:13.0];// self.configuration.indicatorTextFont;
+
         _indicator.textAlignment = NSTextAlignmentCenter;
         _indicator.hidden = YES;
         
